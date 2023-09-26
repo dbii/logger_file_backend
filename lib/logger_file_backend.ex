@@ -34,6 +34,7 @@ defmodule LoggerFileBackend do
         %{level: min_level, metadata_filter: metadata_filter, metadata_reject: metadata_reject} =
           state
       ) do
+    level = if level == :warn, do: :warning, else: level
     if (is_nil(min_level) or Logger.compare_levels(level, min_level) != :lt) and
          metadata_matches?(md, metadata_filter) and
          (is_nil(metadata_reject) or !metadata_matches?(md, metadata_reject)) do
